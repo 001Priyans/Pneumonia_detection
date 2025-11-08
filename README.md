@@ -207,47 +207,12 @@ COPY . .
 CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
 ```
 
-## 🔐 Security Considerations
 
-- File size limited to 16MB
-- Only image files (JPG, JPEG, PNG) allowed
-- Secure filename handling
-- Input validation and error handling
-
-## 📝 Future Enhancements
-
-- [ ] Add user authentication
-- [ ] Store prediction history
-- [ ] Support for batch predictions
-- [ ] Model performance metrics dashboard
-- [ ] Multi-language support
-- [ ] Mobile application
-- [ ] Integration with PACS systems
 
 ## ⚠️ Disclaimer
 
 This application is for **educational and research purposes only**. It should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare professionals for medical decisions.
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Name](https://linkedin.com/in/yourusername)
-- Email: your.email@example.com
 
 ## 🙏 Acknowledgments
 
