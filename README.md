@@ -222,16 +222,6 @@ This application is for **educational and research purposes only**. It should no
 - Flask framework
 - Bootstrap and Font Awesome
 
-## 📸 Screenshots
-
-### Home Page
-![Home Page](screenshots/home.png)
-
-### Upload Interface
-![Upload](screenshots/upload.png)
-
-### Results Display
-![Results](screenshots/results.png)
 
 ---
 
