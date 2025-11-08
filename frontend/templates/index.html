@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pneumonia Detection System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-lungs me-2"></i>
+                Pneumonia Detection System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#upload">Upload</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">
+                        AI-Powered Pneumonia Detection
+                    </h1>
+                    <p class="lead mb-4">
+                        Upload chest X-ray images and get instant AI-powered predictions for pneumonia detection using deep learning.
+                    </p>
+                    <a href="#upload" class="btn btn-primary btn-lg">
+                        <i class="fas fa-upload me-2"></i>Upload X-ray
+                    </a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="hero-icon">
+                        <i class="fas fa-lungs"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">About This System</h2>
+                    <p class="text-muted">Built with VGG19 Transfer Learning Architecture</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Deep Learning</h4>
+                        <p>Powered by VGG19 convolutional neural network architecture with transfer learning.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4>Fast & Accurate</h4>
+                        <p>Get instant predictions with high accuracy on chest X-ray images.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Reliable</h4>
+                        <p>Trained on thousands of chest X-ray images for robust detection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section id="upload" class="upload-section py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="upload-card">
+                        <h2 class="text-center mb-4">Upload Chest X-ray</h2>
+                        
+                        <!-- Upload Form -->
+                        <div class="upload-area" id="uploadArea">
+                            <input type="file" id="fileInput" accept="image/*" hidden>
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h4>Drag & Drop or Click to Upload</h4>
+                                <p>Supported formats: JPG, JPEG, PNG</p>
+                            </div>
+                        </div>
+
+                        <!-- Image Preview -->
+                        <div id="imagePreview" class="image-preview" style="display: none;">
+                            <img id="previewImg" src="" alt="Preview">
+                            <button class="btn btn-secondary btn-sm mt-3" id="changeImage">
+                                <i class="fas fa-exchange-alt me-2"></i>Change Image
+                            </button>
+                        </div>
+
+                        <!-- Analyze Button -->
+                        <div class="text-center mt-4">
+                            <button id="analyzeBtn" class="btn btn-primary btn-lg" disabled>
+                                <i class="fas fa-microscope me-2"></i>Analyze X-ray
+                            </button>
+                        </div>
+
+                        <!-- Loading Spinner -->
+                        <div id="loading" class="text-center mt-4" style="display: none;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Analyzing image...</p>
+                        </div>
+
+                        <!-- Results -->
+                        <div id="results" class="results-section" style="display: none;">
+                            <h3 class="text-center mb-4">Analysis Results</h3>
+                            
+                            <div class="result-card" id="resultCard">
+                                <div class="result-header">
+                                    <h4 id="predictionText"></h4>
+                                    <div class="confidence-badge" id="confidenceBadge"></div>
+                                </div>
+                                
+                                <div class="probability-bars mt-4">
+                                    <div class="prob-item">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Normal</span>
+                                            <span id="normalProb">0%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div id="normalBar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="prob-item mt-3">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Pneumonia</span>
+                                            <span id="pneumoniaProb">0%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div id="pneumoniaBar" class="progress-bar bg-danger" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-info mt-4">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Disclaimer:</strong> This is an AI-based prediction tool for educational purposes. 
+                                    Always consult with a qualified healthcare professional for medical diagnosis.
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button class="btn btn-primary" id="analyzeAnother">
+                                        <i class="fas fa-redo me-2"></i>Analyze Another Image
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">How It Works</h2>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h5>Upload X-ray</h5>
+                        <p>Upload a chest X-ray image in JPG or PNG format</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h5>Preprocessing</h5>
+                        <p>Image is resized and normalized for the model</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h5>AI Analysis</h5>
+                        <p>VGG19 model analyzes the image patterns</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h5>Results</h5>
+                        <p>Get prediction with confidence scores</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">
+                <i class="fas fa-code me-2"></i>Built with Deep Learning | VGG19 Architecture
+            </p>
+            <p class="mb-0 mt-2">
+                <a href="https://github.com/yourusername" class="text-white me-3">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://linkedin.com/in/yourusername" class="text-white">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
