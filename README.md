@@ -5,7 +5,6 @@ An AI-powered web application for detecting pneumonia from chest X-ray images us
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15-orange)
 ![Flask](https://img.shields.io/badge/Flask-3.0-green)
-![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ## 🌟 Features
 
